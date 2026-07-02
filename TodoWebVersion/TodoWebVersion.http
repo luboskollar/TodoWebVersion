@@ -1,0 +1,6 @@
+@TodoWebVersion_HostAddress = http://localhost:5227
+
+GET {{TodoWebVersion_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
