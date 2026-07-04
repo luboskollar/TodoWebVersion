@@ -1,4 +1,5 @@
 ﻿using TodoWebVersion.Enums;
+using TodoWebVersion.Models.DTOs;
 
 namespace TodoWebVersion.Models;
 
@@ -22,5 +23,13 @@ public class TodoItem
     public override string ToString()
     {
         return $"[{Id}] {Title} | {Priority} | {Status} | Due: {DueDate:dd.MM.yyyy}";
+    }
+
+    public void UpdateFrom(UpdateTodoDto dto)
+    {
+        Title = dto.Title;
+        Status = dto.Status;
+        Priority = dto.Priority;
+        DueDate = dto.DueDate;
     }
 }

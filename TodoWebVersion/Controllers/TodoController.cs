@@ -35,4 +35,28 @@ public class TodoController : ControllerBase
         }
         return Ok(todo);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] UpdateTodoDto dto)
+    {
+        var todo = _todoItems.FirstOrDefault(t => t.Id == id);
+        if (todo == null)
+        {
+            return NotFound();
+        }
+        todo.UpdateFrom(dto);
+        return Ok(todo);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var todo = _todoItems.FirstOrDefault(t => t.Id == id);
+        if (todo == null)
+        {
+            return NotFound();
+        }
+        _todoItems.Remove(todo);
+        return NoContent();
+    }
 }
