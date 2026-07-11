@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TodoWebVersion.Enums;
 using TodoWebVersion.Models;
 using TodoWebVersion.Models.DTOs;
 
@@ -34,6 +35,13 @@ public class TodoController : ControllerBase
             return NotFound();    
         }
         return Ok(todo);
+    }
+
+    [HttpGet("status/{status}")]
+    public IActionResult GetByStatus(Status status)
+    {
+        List<TodoItem> filtered = _todoItems.Where(t => t.Status == status).ToList();
+        return Ok(filtered);
     }
 
     [HttpPut("{id}")]

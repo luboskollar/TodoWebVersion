@@ -1,6 +1,17 @@
 @TodoWebVersion_HostAddress = http://localhost:5227
 
-GET {{TodoWebVersion_HostAddress}}/weatherforecast/
+GET {{TodoWebVersion_HostAddress}}/api/Todo
 Accept: application/json
+
+###
+
+POST {{TodoWebVersion_HostAddress}}/api/Todo
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "dueDate": "2026-08-01",
+  "priority": 1
+}
 
 ###
