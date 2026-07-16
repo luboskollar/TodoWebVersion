@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TodoWebVersion.Data;
 using TodoWebVersion.Enums;
 using TodoWebVersion.Models;
 using TodoWebVersion.Models.DTOs;
@@ -8,28 +9,32 @@ namespace TodoWebVersion.Controllers;
 [Route("api/[controller]")]
 public class TodoController : ControllerBase
 {
-    private static List<TodoItem> _todoItems = new();
-    private static int _nextId = 1;
-    
+    private readonly TodoDbContext _context;
+
+    public TodoController(TodoDbContext context)
+    {
+        _context = context;
+    }
+
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(_todoItems);
+        return Ok(_context.Todos.ToList());
     }
 
     [HttpPost]
     public IActionResult Add([FromBody] CreateTodoDto dto)
     {
-        var newTodo = new TodoItem(_nextId, dto.Title, dto.DueDate, dto.Priority);
-        _nextId++;
-        _todoItems.Add(newTodo);
+        var newTodo = new TodoItem(0, dto.Title, dto.DueDate, dto.Priority);
+        _context.Todos.Add(newTodo);
+        _context.SaveChanges();
         return Ok(newTodo);
     }
     
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
-        var todo = _todoItems.FirstOrDefault(t => t.Id == id);
+        var todo = _context.Todos.FirstOrDefault(t => t.Id == id);
         if (todo == null)
         {
             return NotFound();    
@@ -40,31 +45,33 @@ public class TodoController : ControllerBase
     [HttpGet("status/{status}")]
     public IActionResult GetByStatus(Status status)
     {
-        List<TodoItem> filtered = _todoItems.Where(t => t.Status == status).ToList();
+        List<TodoItem> filtered = _context.Todos.Where(t => t.Status == status).ToList();
         return Ok(filtered);
     }
 
     [HttpPut("{id}")]
     public IActionResult Update(int id, [FromBody] UpdateTodoDto dto)
     {
-        var todo = _todoItems.FirstOrDefault(t => t.Id == id);
+        var todo = _context.Todos.FirstOrDefault(t => t.Id == id);
         if (todo == null)
         {
             return NotFound();
         }
         todo.UpdateFrom(dto);
+        _context.SaveChanges();
         return Ok(todo);
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var todo = _todoItems.FirstOrDefault(t => t.Id == id);
+        var todo = _context.Todos.FirstOrDefault(t => t.Id == id);
         if (todo == null)
         {
             return NotFound();
         }
-        _todoItems.Remove(todo);
+        _context.Todos.Remove(todo);
+        _context.SaveChanges();
         return NoContent();
     }
 }
