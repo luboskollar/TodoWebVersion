@@ -30,8 +30,9 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
-
+        
+        app.UseStaticFiles();
+        
         app.MapControllers();
 
         app.Run();
