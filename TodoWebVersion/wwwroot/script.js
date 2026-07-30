@@ -9,6 +9,10 @@
                 const listItem = document.createElement('li');
                 listItem.textContent = todo.title;
                 
+                if (todo.status === 2) {
+                    listItem.classList.add('completed');
+                }
+                
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = "x";
                 deleteButton.addEventListener('click', () => {
@@ -51,7 +55,10 @@ loadTodos();
 
 document.getElementById('add-btn').addEventListener('click', function(){
     const input = document.getElementById('new-task');
-    if (input.value.trim() === '') {
+    const error = document.getElementById('error-message');
+    const dateInput = document.getElementById('new-date');
+    if (input.value.trim() === '' || dateInput.value.trim() === '') {
+        error.textContent = '> error: title and date required';
         return;
     }
     fetch('api/Todo', {
@@ -59,12 +66,13 @@ document.getElementById('add-btn').addEventListener('click', function(){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
             title: input.value,
-            dueDate: document.getElementById('new-date').value,
+            dueDate: dateInput.value,
             priority: Number(document.getElementById('new-priority').value),
         })
     })
         .then(() => {
             input.value = '';
+            error.textContent = '';
             loadTodos();
         });
 })

@@ -1,0 +1,52 @@
+﻿body {
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    font-size: 1.5rem;
+    color-scheme: dark;
+}
+
+#app {     
+    padding: 50px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+#add-btn:hover {
+    background-color: #222;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+button, input, select {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    color: inherit;
+    font-size: inherit;
+}
+
+button, select {
+    cursor: pointer;
+}
+
+.filter-btn {
+    margin-top: 20px; 
+}
+
+.filter-btn:hover {
+    background-color: #222;
+}
+
+option {
+    background-color: #111;
+    color: #fff;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #666;
+}

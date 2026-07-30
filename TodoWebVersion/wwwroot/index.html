@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Todo App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
@@ -17,9 +18,13 @@
         </select>
         <button id="add-btn">+</button>
         <br>
-        <button id="filter-all">all</button>
-        <button id="filter-pending">pending</button>
-        <button id="filter-completed">completed</button>
+        <p id="error-message"></p>
+        <br>
+        <button id="filter-all" class="filter-btn">all</button>
+        <button id="filter-pending" class="filter-btn">pending</button>
+        <button id="filter-completed" class="filter-btn">completed</button>
+
+        
         <ul id="todo-list">
             
         </ul>
