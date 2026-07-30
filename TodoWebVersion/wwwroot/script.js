@@ -7,7 +7,7 @@
             todoList.innerHTML = '';
             data.forEach(todo => {
                 const listItem = document.createElement('li');
-                listItem.textContent = todo.title;
+                listItem.textContent = `${todo.title} | ${new Date(todo.dueDate).toLocaleDateString()}`;
                 
                 if (todo.status === 2) {
                     listItem.classList.add('completed');
